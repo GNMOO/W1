@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوة زفاف | د. سلمى &amp; د. محمد</title>
+<meta name="description" content="دعوة زفاف د. سلمى ود. محمد">
+
+<!-- ============================================================
+     خطوط جوجل: Amiri للعناوين (خط عربي كلاسيكي أنيق)
+     و IBM Plex Sans Arabic للنصوص (خط عصري واضح)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome للأيقونات -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     شاشة الدخول (Entrance Overlay)
+     تظهر عند تحميل الصفحة ثم تختفي بأنيميشن أنيق
+     ============================================================ -->
+<div class="entrance-overlay" id="entranceOverlay">
+  <div class="entrance-content">
+    <div class="entrance-ornament">
+      <svg viewBox="0 0 120 120" class="rosette-svg" aria-hidden="true">
+        <use href="#rosetteShape"></use>
+      </svg>
+    </div>
+    <p class="entrance-names">سلمى <span class="amp">&amp;</span> محمد</p>
+    <p class="entrance-sub">تفضّلوا بالدخول</p>
+  </div>
+</div>
+
+<!-- تعريف الأشكال المستخدمة عدة مرات (SVG Symbols) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- وردة إسلامية هندسية ثمانية - العنصر المميز للتصميم -->
+    <symbol id="rosetteShape" viewBox="0 0 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="60" cy="60" r="52"/>
+        <circle cx="60" cy="60" r="40"/>
+        <path d="M60 8 L71 39 L104 39 L77 59 L88 91 L60 71 L32 91 L43 59 L16 39 L49 39 Z"/>
+      </g>
+    </symbol>
+    <!-- بتلة زهرة عائمة -->
+    <symbol id="petalShape" viewBox="0 0 40 40">
+      <path d="M20 2 C30 10 34 22 20 38 C6 22 10 10 20 2 Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- طبقة البتلات العائمة في الخلفية (تُنشأ ديناميكياً بالجافاسكربت) -->
+<div class="petals-layer" id="petalsLayer" aria-hidden="true"></div>
+
+<!-- طبقة التألق / الجزيئات المتوهجة -->
+<div class="sparkle-layer" id="sparkleLayer" aria-hidden="true"></div>
+
+<!-- شريط تنقل عائم بسيط -->
+<nav class="site-nav" aria-label="التنقل الرئيسي">
+  <button class="music-toggle" id="musicToggle" aria-pressed="false">
+    <i class="fa-solid fa-music" aria-hidden="true"></i>
+    <span id="musicLabel">تشغيل الموسيقى</span>
+  </button>
+</nav>
+
+<main>
+
+  <!-- ============================================================
+       قسم البداية (Hero Section)
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-parallax" id="heroParallax">
+      <div class="hero-orn hero-orn--tl">
+        <svg viewBox="0 0 120 120" class="rosette-svg small"><use href="#rosetteShape"></use></svg>
+      </div>
+      <div class="hero-orn hero-orn--br">
+        <svg viewBox="0 0 120 120" class="rosette-svg small"><use href="#rosetteShape"></use></svg>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal-up">بكل الشوق والامتنان</p>
+
+      <h1 class="hero-title" aria-label="دعوة زفاف">
+        <span class="title-line reveal-title" data-text="دعوة">دعوة</span>
+        <span class="title-line reveal-title delay-1" data-text="زفاف">زفاف</span>
+      </h1>
+
+      <div class="gold-divider reveal-up delay-2" aria-hidden="true">
+        <span class="divider-line"></span>
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+        <span class="divider-line"></span>
+      </div>
+
+      <p class="hero-names reveal-up delay-3">
+        <!-- ✏️ يمكن تعديل الأسماء هنا -->
+        د. سلمى <span class="amp">&amp;</span> د. محمد
+      </p>
+
+      <p class="hero-message reveal-up delay-4">
+        بكل الحب والامتنان، يتشرف د. سلمى &amp; د. محمد<br>
+        بدعوتكم لمشاركتهم فرحة زفافهم
+      </p>
+
+      <a href="#rsvp" class="hero-cta reveal-up delay-5">
+        <span>تأكيد الحضور</span>
+        <i class="fa-solid fa-arrow-down-long" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       قسم العد التنازلي (Countdown)
+       ============================================================ -->
+  <section class="section countdown-section" id="countdown">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">تبقّى على الحفل</p>
+      <div class="ornament-divider reveal" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+      </div>
+
+      <div class="countdown-grid reveal">
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-days">00</span>
+          <span class="countdown-label">الأيام</span>
+        </div>
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-hours">00</span>
+          <span class="countdown-label">الساعات</span>
+        </div>
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-minutes">00</span>
+          <span class="countdown-label">الدقائق</span>
+        </div>
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-seconds">00</span>
+          <span class="countdown-label">الثواني</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       قسم تفاصيل المناسبة (Event Details)
+       ============================================================ -->
+  <section class="section details-section" id="details">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">تفاصيل الحفل</p>
+      <h2 class="section-title reveal">بانتظاركم بكل شوق</h2>
+      <div class="ornament-divider reveal" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+      </div>
+
+      <div class="details-grid">
+        <article class="detail-card reveal">
+          <div class="detail-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></div>
+          <h3>التاريخ</h3>
+          <!-- ✏️ يمكن تعديل التاريخ هنا -->
+          <p id="eventDateText">الجمعة، ٣٠ أغسطس ٢٠٢٦</p>
+        </article>
+
+        <article class="detail-card reveal delay-1">
+          <div class="detail-icon"><i class="fa-regular fa-clock" aria-hidden="true"></i></div>
+          <h3>الوقت</h3>
+          <!-- ✏️ يمكن تعديل الوقت هنا -->
+          <p id="eventTimeText">تبدأ الساعة ٧:٠٠ مساءً</p>
+        </article>
+
+        <article class="detail-card reveal delay-2">
+          <div class="detail-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+          <h3>المكان</h3>
+          <!-- ✏️ يمكن تعديل اسم المكان هنا -->
+          <p id="eventLocationText">قاعة الماسة الملكية، بنغازي</p>
+          <!-- ✏️ استبدل الرابط أدناه برابط خرائط جوجل الفعلي -->
+          <a href="https://maps.google.com/?q=Benghazi" target="_blank" rel="noopener" class="location-btn" id="mapLink">
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            <span>عرض الموقع</span>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       معرض الصور (Gallery)
+       ============================================================ -->
+  <section class="section gallery-section" id="gallery">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">لحظات من قصتنا</p>
+      <h2 class="section-title reveal">ألبوم الذكريات</h2>
+      <div class="ornament-divider reveal" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+      </div>
+
+      <!-- ✏️ استبدل مسارات الصور أدناه بصوركم الخاصة -->
+      <div class="gallery-grid">
+        <figure class="gallery-item reveal">
+          <img src="https://placehold.co/600x750/F3E9DA/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+1" alt="صورة تذكارية 1" loading="lazy">
+        </figure>
+        <figure class="gallery-item reveal delay-1">
+          <img src="https://placehold.co/600x450/EFE3D0/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+2" alt="صورة تذكارية 2" loading="lazy">
+        </figure>
+        <figure class="gallery-item reveal delay-2">
+          <img src="https://placehold.co/600x450/EFE3D0/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+3" alt="صورة تذكارية 3" loading="lazy">
+        </figure>
+        <figure class="gallery-item reveal delay-3">
+          <img src="https://placehold.co/600x750/F3E9DA/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+4" alt="صورة تذكارية 4" loading="lazy">
+        </figure>
+        <figure class="gallery-item reveal delay-4">
+          <img src="https://placehold.co/600x750/F3E9DA/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+5" alt="صورة تذكارية 5" loading="lazy">
+        </figure>
+        <figure class="gallery-item reveal delay-5">
+          <img src="https://placehold.co/600x450/EFE3D0/9C7A45?font=raleway&text=%D8%B5%D9%88%D8%B1%D8%A9+6" alt="صورة تذكارية 6" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       قسم تأكيد الحضور (RSVP)
+       ============================================================ -->
+  <section class="section rsvp-section" id="rsvp">
+    <div class="section-inner section-inner--narrow">
+      <p class="section-eyebrow reveal">نتشرف بحضوركم</p>
+      <h2 class="section-title reveal">تأكيد الحضور</h2>
+      <div class="ornament-divider reveal" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+      </div>
+
+      <form class="rsvp-form reveal" id="rsvpForm">
+        <div class="form-field">
+          <label for="guestName">الاسم</label>
+          <input type="text" id="guestName" name="guestName" required placeholder="اكتب اسمك هنا" autocomplete="name">
+        </div>
+
+        <div class="form-field">
+          <label for="guestCount">عدد الحضور</label>
+          <input type="number" id="guestCount" name="guestCount" min="1" max="10" value="1" required>
+        </div>
+
+        <fieldset class="form-field form-field--radio">
+          <legend>هل ستتمكنون من الحضور؟</legend>
+          <label class="radio-option">
+            <input type="radio" name="attendance" value="yes" checked>
+            <span class="radio-custom"></span>
+            <span>نعم سأحضر</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="attendance" value="no">
+            <span class="radio-custom"></span>
+            <span>أعتذر عن الحضور</span>
+          </label>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">
+          <span>إرسال التأكيد</span>
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+        </button>
+
+        <p class="form-hint">سيتم فتح تطبيق البريد الإلكتروني لإرسال ردكم مباشرة إلينا.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       الرسالة الختامية
+       ============================================================ -->
+  <section class="section closing-section" id="closing">
+    <div class="section-inner">
+      <div class="ornament-divider reveal" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="rosette-svg tiny"><use href="#rosetteShape"></use></svg>
+      </div>
+      <p class="closing-message reveal">
+        وجودكم هو أجمل هدية، ونسعد بمشاركتكم هذه الليلة المميزة.
+      </p>
+      <p class="closing-names reveal">د. سلمى <span class="amp">&amp;</span> د. محمد</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>بكل الحب — ٢٠٢٦</p>
+</footer>
+
+<!-- طبقة قصاصات الاحتفال الذهبية (Confetti) عند الوصول للنهاية -->
+<div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+<!-- ✏️ ملف الموسيقى: استبدل music.mp3 بأي ملف صوتي بنفس الاسم -->
+<audio id="bgMusic" loop preload="none">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script src="script.js"></script>
+</body>
+</html>
