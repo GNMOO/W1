@@ -1,0 +1,776 @@
+/* ================================================================
+   دعوة زفاف — ورقة الأنماط
+   نظام الألوان: عاجي / شمباني ذهبي / أبيض / بيج فاتح
+   ================================================================ */
+
+:root {
+  /* ---------- الألوان (يمكن تعديلها من هنا بسهولة) ---------- */
+  --color-ivory: #FBF7EF;
+  --color-ivory-deep: #F4EDDE;
+  --color-white: #FFFFFF;
+  --color-beige: #EFE6D3;
+  --color-gold: #B9924F;
+  --color-gold-light: #D9BC80;
+  --color-gold-deep: #8C6A34;
+  --color-ink: #3A3226;
+  --color-ink-soft: #6E6252;
+
+  /* ---------- الخطوط ---------- */
+  --font-display: 'Amiri', 'Aref Ruqaa', serif;
+  --font-body: 'IBM Plex Sans Arabic', sans-serif;
+
+  /* ---------- مقاسات ومسافات ---------- */
+  --max-width: 1120px;
+  --radius-md: 14px;
+  --radius-lg: 28px;
+  --shadow-soft: 0 20px 60px -25px rgba(140, 106, 52, 0.35);
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------
+   إعادة ضبط أساسية
+   --------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--color-ivory) 0%, var(--color-ivory-deep) 100%);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+  position: relative;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   شاشة الدخول (Entrance Overlay)
+   --------------------------------------------------------------- */
+.entrance-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, var(--color-ivory) 0%, var(--color-beige) 100%);
+  transition: opacity 1.1s var(--ease-lux), visibility 1.1s var(--ease-lux);
+}
+
+.entrance-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entrance-content {
+  text-align: center;
+  animation: entranceFloat 2.6s var(--ease-lux) infinite;
+}
+
+.entrance-ornament {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.2rem;
+  color: var(--color-gold);
+  animation: spinSlow 18s linear infinite;
+}
+
+.rosette-svg { width: 100%; height: 100%; }
+.rosette-svg.small { width: 70px; height: 70px; }
+.rosette-svg.tiny { width: 42px; height: 42px; }
+
+.entrance-names {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-gold-deep);
+  letter-spacing: 0.02em;
+  margin: 0 0 0.4rem;
+}
+
+.entrance-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: var(--color-ink-soft);
+  text-transform: none;
+}
+
+@keyframes entranceFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------
+   طبقات الخلفية الزخرفية: بتلات + تألق
+   --------------------------------------------------------------- */
+.petals-layer,
+.sparkle-layer,
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.petal {
+  position: absolute;
+  top: -40px;
+  color: var(--color-gold-light);
+  opacity: 0.55;
+  width: 18px;
+  height: 18px;
+  will-change: transform;
+  animation-name: petalFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes petalFall {
+  0% { transform: translateY(-5vh) translateX(0) rotate(0deg); }
+  100% { transform: translateY(105vh) translateX(var(--drift, 40px)) rotate(360deg); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-gold-light);
+  box-shadow: 0 0 8px 2px rgba(217, 188, 128, 0.8);
+  opacity: 0;
+  animation: sparkleTwinkle 3.5s ease-in-out infinite;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+/* قصاصات الاحتفال الذهبية عند النهاية */
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 8px;
+  height: 14px;
+  background: var(--color-gold);
+  opacity: 0.85;
+  animation-name: confettiDrop;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confettiDrop {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+  100% { transform: translateY(70vh) rotate(540deg); opacity: 0; }
+}
+
+/* ---------------------------------------------------------------
+   شريط التنقل
+   --------------------------------------------------------------- */
+.site-nav {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.4rem;
+  z-index: 60;
+}
+
+.music-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.1rem;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(185, 146, 79, 0.35);
+  border-radius: 50px;
+  color: var(--color-gold-deep);
+  font-size: 0.82rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.35s var(--ease-lux), background 0.35s;
+}
+
+.music-toggle:hover {
+  transform: translateY(-2px);
+  background: var(--color-white);
+}
+
+.music-toggle i { font-size: 0.85rem; }
+
+.music-toggle.playing i {
+  animation: notePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes notePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+/* ---------------------------------------------------------------
+   قسم البداية (Hero)
+   --------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 1.5rem 4rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  /* نسيج خفيف يشبه الرخام/الورق الفاخر */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(217, 188, 128, 0.18), transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(185, 146, 79, 0.14), transparent 55%);
+  z-index: -1;
+}
+
+.hero-parallax {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-orn {
+  position: absolute;
+  color: var(--color-gold);
+  opacity: 0.18;
+}
+
+.hero-orn--tl { top: 8%; right: 6%; width: 130px; }
+.hero-orn--br { bottom: 8%; left: 6%; width: 160px; }
+
+.hero-content { max-width: 780px; z-index: 1; }
+
+.hero-eyebrow {
+  font-size: 0.95rem;
+  letter-spacing: 0.25em;
+  color: var(--color-gold-deep);
+  margin-bottom: 1.2rem;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: clamp(3.2rem, 11vw, 6.4rem);
+  color: var(--color-ink);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.6rem;
+}
+
+.title-line {
+  display: inline-block;
+  background: linear-gradient(120deg, var(--color-gold-deep) 10%, var(--color-gold-light) 45%, var(--color-gold-deep) 80%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 0 auto 1.8rem;
+  color: var(--color-gold);
+  max-width: 340px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.hero-names {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  color: var(--color-gold-deep);
+  margin-bottom: 1.4rem;
+}
+
+.amp { font-style: italic; opacity: 0.75; padding: 0 0.15rem; }
+
+.hero-message {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--color-ink-soft);
+  margin-bottom: 2.4rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 2.2rem;
+  border: 1px solid var(--color-gold);
+  border-radius: 50px;
+  color: var(--color-gold-deep);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: all 0.4s var(--ease-lux);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-lux);
+  z-index: -1;
+}
+
+.hero-cta:hover {
+  color: var(--color-white);
+}
+
+.hero-cta:hover::before { transform: scaleX(1); }
+
+.hero-cta i { transition: transform 0.35s; }
+.hero-cta:hover i { transform: translateY(3px); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 20px;
+}
+
+.scroll-hint span {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--color-gold);
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { top: 6px; opacity: 1; }
+  70% { opacity: 1; }
+  100% { top: 20px; opacity: 0; }
+}
+
+/* ---------------------------------------------------------------
+   عناصر الظهور عند الدخول (Hero entrance reveal)
+   --------------------------------------------------------------- */
+.reveal-up, .reveal-title {
+  opacity: 0;
+  transform: translateY(26px);
+  animation: revealUp 1s var(--ease-lux) forwards;
+}
+
+.reveal-title { animation-name: revealTitle; }
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealTitle {
+  0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+.delay-4 { animation-delay: 0.6s; }
+.delay-5 { animation-delay: 0.75s; }
+
+/* ---------------------------------------------------------------
+   أقسام عامة
+   --------------------------------------------------------------- */
+.section {
+  position: relative;
+  padding: 6rem 1.5rem;
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-inner--narrow { max-width: 560px; }
+
+.section-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: var(--color-gold);
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  color: var(--color-ink);
+  margin-bottom: 1.4rem;
+}
+
+.ornament-divider {
+  color: var(--color-gold);
+  width: 42px;
+  margin: 0 auto 2.6rem;
+  animation: spinSlow 24s linear infinite;
+}
+
+/* ظهور العناصر عند التمرير (JS يضيف كلاس in-view) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-lux), transform 0.9s var(--ease-lux);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------
+   العد التنازلي
+   --------------------------------------------------------------- */
+.countdown-section {
+  background: linear-gradient(180deg, transparent, rgba(185, 146, 79, 0.06) 40%, transparent);
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.countdown-card {
+  background: var(--color-white);
+  border: 1px solid rgba(185, 146, 79, 0.25);
+  border-radius: var(--radius-md);
+  padding: 1.6rem 0.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.4s var(--ease-lux);
+}
+
+.countdown-card:hover { transform: translateY(-6px); }
+
+.countdown-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--color-gold-deep);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+/* ---------------------------------------------------------------
+   تفاصيل المناسبة
+   --------------------------------------------------------------- */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.8rem;
+  margin-top: 1rem;
+}
+
+.detail-card {
+  background: var(--color-white);
+  border: 1px solid rgba(185, 146, 79, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2.4rem 1.6rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.45s var(--ease-lux), box-shadow 0.45s;
+}
+
+.detail-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 70px -25px rgba(140, 106, 52, 0.45);
+}
+
+.detail-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--color-ivory-deep), var(--color-white));
+  color: var(--color-gold-deep);
+  font-size: 1.4rem;
+  box-shadow: inset 0 0 0 1px rgba(185, 146, 79, 0.3);
+}
+
+.detail-card h3 {
+  font-size: 1.25rem;
+  color: var(--color-ink);
+  margin-bottom: 0.6rem;
+}
+
+.detail-card p {
+  color: var(--color-ink-soft);
+  margin: 0 0 1.2rem;
+}
+
+.location-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.3rem;
+  border-radius: 50px;
+  background: var(--color-gold);
+  color: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.35s, transform 0.35s;
+}
+
+.location-btn:hover {
+  background: var(--color-gold-deep);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------------
+   المعرض
+   --------------------------------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.gallery-item {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 4 / 5;
+}
+
+.gallery-item:nth-child(2), .gallery-item:nth-child(3), .gallery-item:nth-child(6) {
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-lux), filter 0.7s;
+  filter: saturate(0.95);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+  filter: saturate(1.05);
+}
+
+/* ---------------------------------------------------------------
+   نموذج تأكيد الحضور
+   --------------------------------------------------------------- */
+.rsvp-form {
+  background: var(--color-white);
+  border: 1px solid rgba(185, 146, 79, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 2.6rem 2rem;
+  box-shadow: var(--shadow-soft);
+  text-align: right;
+}
+
+.form-field { margin-bottom: 1.5rem; }
+
+.form-field label,
+.form-field legend {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  font-weight: 600;
+  padding: 0;
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(185, 146, 79, 0.35);
+  border-radius: 10px;
+  background: var(--color-ivory);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-ink);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(185, 146, 79, 0.18);
+}
+
+.form-field--radio {
+  border: none;
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+}
+
+.radio-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.radio-custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold);
+  position: relative;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+
+.radio-option input:checked + .radio-custom {
+  background: var(--color-gold);
+  box-shadow: inset 0 0 0 3px var(--color-white);
+}
+
+.submit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  background: linear-gradient(120deg, var(--color-gold-deep), var(--color-gold));
+  color: var(--color-white);
+  border-radius: 50px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.35s var(--ease-lux), box-shadow 0.35s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px -14px rgba(140, 106, 52, 0.55);
+}
+
+.form-hint {
+  margin: 1rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------
+   الرسالة الختامية
+   --------------------------------------------------------------- */
+.closing-section {
+  text-align: center;
+  padding-bottom: 8rem;
+}
+
+.closing-message {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--color-gold-deep);
+  max-width: 640px;
+  margin: 0 auto 1.2rem;
+  line-height: 1.9;
+}
+
+.closing-names {
+  color: var(--color-ink-soft);
+  letter-spacing: 0.05em;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem 2.6rem;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  border-top: 1px solid rgba(185, 146, 79, 0.2);
+}
+
+/* ---------------------------------------------------------------
+   استجابة الشاشات (Responsive)
+   --------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .countdown-grid { gap: 0.7rem; }
+  .countdown-card { padding: 1.1rem 0.3rem; }
+  .details-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  .rsvp-form { padding: 2rem 1.3rem; }
+  .form-field--radio { flex-direction: column; gap: 0.9rem; }
+  .site-nav { top: 1rem; left: 1rem; }
+  .music-toggle span { display: none; }
+  .music-toggle { padding: 0.7rem; border-radius: 50%; }
+}
+
+@media (max-width: 380px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
